@@ -1,0 +1,11 @@
+.responsive-bar {
+  align-self: center;
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .responsive-bar {
+    width: 90vw;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,83 @@
+.link {
+  text-decoration: none;
+}
+
+a {
+  cursor: pointer;
+  outline: none;
+}
+
+.footer-container {
+  width: 100%;
+  /* min-width: 720px; */
+  height: 280px;
+  background: #161625;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.COVID19 {
+  color: var(--light-blue-gray-50, #f8fafc);
+  text-align: center;
+  font-family: Bree Serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+}
+
+.INDIA {
+  color: var(--light-blue-500, #3b82f6);
+  font-family: Bree Serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.footer-para {
+  color: var(--light-blue-gray-400, #94a3b8);
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+@media screen and (max-width: 576px) {
+  .footer-para {
+    font-size: 14px;
+  }
+}
+
+.follow-us-icons-card {
+  display: flex;
+}
+
+.follow-us-icons-list {
+  margin: 0 30px 0 30px;
+}
+
+.follow-us-icon-btn {
+  background-color: transparent;
+  border: 0;
+  stroke-width: 2px;
+  color: var(--light-blue-gray-300, #cbd5e1);
+  padding: 0;
+  cursor: pointer;
+}
+
+.follow-us-icon {
+  width: 42px;
+  height: 46.106px;
+}
+
+@media screen and (max-width: 576px) {
+  .follow-us-icon {
+    width: 24px;
+    height: 20px;
+  }
+}

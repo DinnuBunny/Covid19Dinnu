@@ -1,0 +1,152 @@
+.link {
+  text-decoration: none;
+  width: 220px;
+  text-align: start;
+  color: var(--light-blue-gray-100, #f1f5f9);
+}
+
+@media (min-width: 576px) {
+  .table-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-div {
+    width: 90vw;
+    padding: 10px;
+    overflow-x: scroll;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    align-items: center;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 750px) {
+  .table-div {
+    width: 90vw;
+    padding: 10px;
+    overflow-x: scroll;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}
+
+table {
+  border-radius: 12px;
+  width: 75%;
+  border: 1px solid var(--light-blue-gray-600, #475569);
+  background: #1e1e30;
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.16);
+  padding: 10px;
+}
+
+.table-head {
+  border-bottom: 1px solid var(--light-blue-gray-600, #475569);
+  display: flex;
+  justify-content: space-around;
+}
+
+th {
+  color: var(--light-blue-gray-50, #f8fafc);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  width: 110px;
+  text-align: end;
+  padding-bottom: 10px;
+  text-align: end;
+}
+
+.th-button {
+  width: 110px;
+  background-color: transparent;
+  border: 0;
+  color: var(--light-blue-gray-50, #f8fafc);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 150% */
+  text-align: end;
+  padding-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.table-head-states-th {
+  display: flex;
+  align-items: center;
+  width: 220px;
+}
+
+.sort-button-card {
+  display: flex;
+}
+
+.sort-btn {
+  border: 0;
+  background-color: transparent;
+  color: #475569;
+  padding: 0;
+  margin: 0 6px 0 6px;
+  cursor: pointer;
+}
+
+.tbody-tr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+td {
+  width: 110px;
+  text-align: end;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.5;
+}
+
+.state-name-td {
+  width: 220px;
+  text-align: start;
+  color: var(--light-blue-gray-100, #f1f5f9);
+  align-self: flex-start;
+}
+
+tr:hover > td:first-child {
+  text-align: end;
+  color: #551a8b;
+}
+
+.confirmed-td {
+  color: #ff073a;
+}
+
+.active-td {
+  color: #007bff;
+}
+
+.recovered-td {
+  color: #28a745;
+}
+
+.deceased-td {
+  color: #6c757d;
+}
+
+.population-td {
+  color: #94a3b8;
+}

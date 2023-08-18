@@ -1,0 +1,70 @@
+.line-chart-main-container {
+  padding: 10px;
+}
+
+.line-chart-heading {
+  color: var(--light-blue-gray-300, #cbd5e1);
+  font-family: Roboto;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px; /* 150% */
+}
+
+.line-chart-container {
+  width: 1150px;
+  height: 380px;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1200px) {
+  .line-chart-container {
+    width: 90vw;
+    overflow-x: auto;
+  }
+}
+
+.chart-type {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+  align-self: flex-end;
+  margin-right: 20px;
+}
+
+.custom-tooltip {
+  height: 76px;
+  min-width: 76px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--light-blue-gray-200, #e2e8f0);
+  font-weight: 500;
+  font-family: Roboto;
+}
+
+.custom-tooltip-date {
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 0;
+}
+
+.custom-tooltip-count {
+  margin-top: 5px;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.custom-tooltip-change {
+  font-size: 12px;
+  line-height: 16px;
+}
