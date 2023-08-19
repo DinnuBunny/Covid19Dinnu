@@ -43,22 +43,32 @@ class StateSpecific extends Component {
     this.setState({apiStatus: apiConst.loading})
     const {match} = this.props
     const {stateCode} = match.params
-    const apiUrl = 'https://apis.ccbp.in/covid19-state-wise-data'
-    const response = await fetch(apiUrl)
-    const data = await response.json()
-    const stateData = data[stateCode]
+    const isSateCodePresent = IndianStatesList.find(
+      each => each.state_code === stateCode,
+    )
 
-    const apiUrl2 = `https://apis.ccbp.in/covid19-timelines-data/${stateCode}`
-    const response2 = await fetch(apiUrl2)
-    const data2 = await response2.json()
-    const stateTimelinesData = data2[stateCode]
+    if (isSateCodePresent) {
+      console.log('Present')
+      const apiUrl = 'https://apis.ccbp.in/covid19-state-wise-data'
+      const response = await fetch(apiUrl)
+      const data = await response.json()
 
-    if (response.ok && response2.ok) {
-      this.setState({
-        stateTimelinesData,
-        stateCovidData: stateData,
-        apiStatus: apiConst.success,
-      })
+      const apiUrl2 = `https://apis.ccbp.in/covid19-timelines-data/${stateCode}`
+      const response2 = await fetch(apiUrl2)
+      const data2 = await response2.json()
+
+      if (response.ok && response2.ok) {
+        const stateData = data[stateCode]
+        const stateTimelinesData = data2[stateCode]
+        this.setState({
+          stateTimelinesData,
+          stateCovidData: stateData,
+          apiStatus: apiConst.success,
+        })
+      }
+    } else {
+      const {history} = this.props
+      history.replace('/not-found')
     }
   }
 
