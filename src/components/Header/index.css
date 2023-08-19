@@ -8,7 +8,8 @@
   height: 80px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   background: #1e1e30;
 }
@@ -17,6 +18,13 @@
   .header-container {
     height: 56px;
   }
+}
+
+.header-container-2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 ul {
@@ -81,7 +89,7 @@ ul {
 }
 
 .header-btn-list {
-  margin-right: 24px;
+  margin-right: 44px;
   background-color: transparent;
   border: 0;
   cursor: pointer;

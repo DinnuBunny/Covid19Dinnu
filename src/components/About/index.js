@@ -24,7 +24,6 @@ class About extends Component {
     const response = await fetch(apiUrl)
     if (response.ok) {
       const data = await response.json()
-      console.log(data.faq)
       this.setState({faqList: data.faq, apiStatus: apiConst.success})
     }
   }

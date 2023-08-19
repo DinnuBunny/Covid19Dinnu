@@ -79,7 +79,6 @@ class StateSpecific extends Component {
   )
 
   renderSuccessView = () => {
-    window.scrollTo(0, 0)
     const {stateCovidData, stateTimelinesData, activeMeta} = this.state
     const {match} = this.props
     const {stateCode} = match.params

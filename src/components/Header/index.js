@@ -1,6 +1,8 @@
 import {useState} from 'react'
 import {withRouter, Link} from 'react-router-dom'
-import addToQueue1 from '../../icons/addtoqueue1.svg'
+import {ImMenu2, ImMenu3} from 'react-icons/im'
+
+// import addToQueue1 from '../../icons/addtoqueue1.svg'
 import CloseIcon from '../../icons/CloseIcon.svg'
 import './index.css'
 
@@ -61,51 +63,64 @@ function Header(props) {
     </div>
   )
 
+  const headerHeight = popup ? '125px' : '56px'
+
   return (
     <>
-      <header className="header-container">
-        <ul className="covid19-un">
-          <li>
-            <Link to="/" className="link">
-              <h1 className="COVID19">
-                COVID19<span className="INDIA">INDIA</span>
-              </h1>
-            </Link>
-          </li>
-        </ul>
-        <ul className="home-about-card-ul-lg">
-          <li className="header-li">
-            <Link to="/" className="link">
-              <button type="button" className={homeClass}>
-                Home
+      <header className="header-container" style={{height: headerHeight}}>
+        <div className="header-container-2">
+          <ul className="covid19-un">
+            <li>
+              <Link to="/" className="link">
+                <h1 className="COVID19">
+                  COVID19<span className="INDIA">INDIA</span>
+                </h1>
+              </Link>
+            </li>
+          </ul>
+          <ul className="home-about-card-ul-lg">
+            <li className="header-li">
+              <Link to="/" className="link">
+                <button type="button" className={homeClass}>
+                  Home
+                </button>
+              </Link>
+            </li>
+            <li className="header-li">
+              <Link to="/about" className="link">
+                <button type="button" className={aboutClass}>
+                  About
+                </button>
+              </Link>
+            </li>
+          </ul>
+          <ul className="home-about-card-ul-md">
+            <li>
+              <button
+                type="button"
+                className="header-btn-list"
+                onClick={onClickListView}
+              >
+                {/* <img
+                  src={addToQueue1}
+                  className="header-list-view"
+                  alt="list view"
+                /> */}
+                {popup ? (
+                  <ImMenu3
+                    style={{width: '35px', height: '35px', color: '#f8fafc'}}
+                  />
+                ) : (
+                  <ImMenu2
+                    style={{width: '35px', height: '35px', color: '#f8fafc'}}
+                  />
+                )}
               </button>
-            </Link>
-          </li>
-          <li className="header-li">
-            <Link to="/about" className="link">
-              <button type="button" className={aboutClass}>
-                About
-              </button>
-            </Link>
-          </li>
-        </ul>
-        <ul className="home-about-card-ul-md">
-          <li>
-            <button
-              type="button"
-              className="header-btn-list"
-              onClick={onClickListView}
-            >
-              <img
-                src={addToQueue1}
-                className="header-list-view"
-                alt="list view"
-              />
-            </button>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
+        {popup ? renderMdHomeAbout() : null}
       </header>
-      {popup ? renderMdHomeAbout() : null}
     </>
   )
 }
