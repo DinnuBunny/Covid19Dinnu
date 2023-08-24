@@ -15,12 +15,19 @@ function Header(props) {
   const aboutClass = `header-btn ${
     pathname !== '/about' ? 'non-active-btn' : ''
   }`
+  const vaccinationClass = `header-btn ${
+    pathname !== '/vaccination' ? 'non-active-btn' : ''
+  }`
 
   const homeClassMd = `header-btn-md ${
     pathname !== '/' ? 'non-active-btn' : ''
   }`
   const aboutClassMd = `header-btn-md ${
     pathname !== '/about' ? 'non-active-btn' : ''
+  }`
+
+  const vaccinationClassMd = `header-btn-md ${
+    pathname !== '/vaccination' ? 'non-active-btn' : ''
   }`
 
   const onClickListView = () => {
@@ -42,6 +49,17 @@ function Header(props) {
               onClick={closeThePopup}
             >
               Home
+            </button>
+          </Link>
+        </li>
+        <li>
+          <Link to="/vaccination" className="link">
+            <button
+              type="button"
+              className={vaccinationClassMd}
+              onClick={closeThePopup}
+            >
+              Vaccination
             </button>
           </Link>
         </li>
@@ -83,6 +101,13 @@ function Header(props) {
               <Link to="/" className="link">
                 <button type="button" className={homeClass}>
                   Home
+                </button>
+              </Link>
+            </li>
+            <li className="header-li">
+              <Link to="/vaccination" className="link">
+                <button type="button" className={vaccinationClass}>
+                  Vaccination
                 </button>
               </Link>
             </li>

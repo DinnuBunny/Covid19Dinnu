@@ -37,6 +37,7 @@ class StateSpecific extends Component {
   componentDidMount() {
     window.scrollTo(0, 0)
     this.fetchTheStateSpecificData()
+    console.log(this.props)
   }
 
   fetchTheStateSpecificData = async () => {
@@ -48,7 +49,6 @@ class StateSpecific extends Component {
     )
 
     if (isSateCodePresent) {
-      console.log('Present')
       const apiUrl = 'https://apis.ccbp.in/covid19-state-wise-data'
       const response = await fetch(apiUrl)
       const data = await response.json()
