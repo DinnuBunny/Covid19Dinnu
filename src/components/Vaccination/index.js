@@ -1,11 +1,15 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
-import {Link} from 'react-router-dom'
-import {AiFillHome} from 'react-icons/ai'
 
 import Header from '../Header'
 import Footer from '../Footer'
-
+import {
+  HomeIndiaStateName,
+  StatesDropdown,
+  DistrictsDropdown,
+} from './InnerComponents'
+import VaccinesIcon from '../../icons/VaccinesIcon.svg'
+import ApartmentIcon from '../../icons/ApartmentIcon.svg'
 import './index.css'
 
 const apiConsts = {
@@ -31,6 +35,7 @@ class Vaccination extends Component {
     ...initialStateDistrict,
     statesData: [],
     districtsData: [],
+    vaccinationData: {},
     ...apiStatus,
   }
 
@@ -54,12 +59,17 @@ class Vaccination extends Component {
   }
 
   getTheVaccinationData = async () => {
-    // const vaccinationApiUrl = 'https://apis.ccbp.in/covid19-vaccination-data'
-    // const response = await fetch(vaccinationApiUrl)
-    // if (response.ok) {
-    //   const data = await response.json()
-    //   console.log(data)
-    // }
+    this.setState({vaccinationDataApi: apiConsts.loading})
+    const vaccinationApiUrl = 'https://apis.ccbp.in/covid19-vaccination-data'
+    const response = await fetch(vaccinationApiUrl)
+    if (response.ok) {
+      const data = await response.json()
+      this.setState({
+        vaccinationData: data,
+        vaccinationDataApi: apiConsts.success,
+      })
+      console.log(data)
+    }
   }
 
   getTheDistrictsData = async () => {
@@ -91,6 +101,91 @@ class Vaccination extends Component {
       this.getTheStateIdsData,
     )
 
+  renderTheSiteConducting = () => {
+    const {vaccinationData} = this.state
+    const {sites} = vaccinationData.topBlock
+    const {total, govt, pvt} = sites
+    return (
+      <>
+        <div className="vaccination-icon-total-card">
+          <div className="vaccination-icon-card">
+            <img
+              src={VaccinesIcon}
+              alt="Vaccination Icon"
+              className="vaccination-icon"
+            />
+          </div>
+          <div className="total-card">
+            <h1 className="site-conducting-title">
+              Site Conducting Vaccination
+            </h1>
+            <p className="total-count">{total}</p>
+          </div>
+        </div>
+        <div className="govt-pvt-container">
+          <div className="govt-pvt-card">
+            <h1 className="govt-pvt-title">Government</h1>
+            <p className="govt-pvt-count">{govt}</p>
+          </div>
+          <div className="govt-pvt-card">
+            <h1 className="govt-pvt-title">Private</h1>
+            <p className="govt-pvt-count">{pvt}</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  renderTheTotalVaccinationDoses = () => {
+    const {vaccinationData, stateId} = this.state
+    let totalVaccinations
+    let dose1
+    let dose2
+
+    if (stateId === initialStateDistrict.stateId) {
+      const {vaccination} = vaccinationData.topBlock
+      totalVaccinations = vaccination.total
+      dose1 = vaccination.tot_dose_1
+      dose2 = vaccination.tot_dose_2
+    } else {
+      const {getBeneficiariesGroupBy} = vaccinationData
+      const stateVaccinationData = getBeneficiariesGroupBy.find(
+        each => each.id === stateId,
+      )
+      totalVaccinations = stateVaccinationData.totally_vaccinated
+      dose1 = stateVaccinationData.partial_vaccinated
+      dose2 = stateVaccinationData.precaution_dose
+    }
+
+    return (
+      <>
+        <div className="vaccination-icon-total-card">
+          <div className="vaccination-icon-card">
+            <img
+              src={ApartmentIcon}
+              alt="Vaccination Icon"
+              className="vaccination-icon"
+            />
+          </div>
+          <div className="total-card">
+            <h1 className="site-conducting-title">Total Vaccination Doses</h1>
+            <p className="total-count">{totalVaccinations}</p>
+          </div>
+        </div>
+        <div className="govt-pvt-container">
+          <div className="govt-pvt-card">
+            <h1 className="govt-pvt-title">Dose 1</h1>
+            <p className="govt-pvt-count">{dose1}</p>
+          </div>
+          <div className="govt-pvt-card">
+            <h1 className="govt-pvt-title">Dose 2</h1>
+            <p className="govt-pvt-count">{dose2}</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   render() {
     const {
       stateId,
@@ -99,6 +194,7 @@ class Vaccination extends Component {
       stateDropdownApi,
       districtsData,
       districtDropdownApi,
+      vaccinationDataApi,
     } = this.state
 
     return (
@@ -124,6 +220,22 @@ class Vaccination extends Component {
               districtDropdownApi={districtDropdownApi}
             />
           </div>
+          <div className="site-conducting-total-vaccination-card">
+            <div className="site-conducting-card">
+              {vaccinationDataApi === apiConsts.success &&
+                this.renderTheSiteConducting()}
+              {vaccinationDataApi === apiConsts.loading && (
+                <RenderDropdownLoadingView />
+              )}
+            </div>
+            <div className="site-conducting-card">
+              {vaccinationDataApi === apiConsts.success &&
+                this.renderTheTotalVaccinationDoses()}
+              {vaccinationDataApi === apiConsts.loading && (
+                <RenderDropdownLoadingView />
+              )}
+            </div>
+          </div>
         </div>
         <Footer />
       </>
@@ -133,134 +245,14 @@ class Vaccination extends Component {
 
 export default Vaccination
 
-const HomeIndiaStateName = props => {
-  const {stateId, statesData, onClickCountryName} = props
-  let stateName
-
-  if (stateId !== 'selectState') {
-    stateName = statesData.find(each => each.state_id === parseInt(stateId))
-      .state_name
-  }
-
-  const onClickIndia = () => onClickCountryName()
-
-  return (
-    <ul className="home-india-state">
-      <li>
-        <Link to="/" className="link">
-          <button type="button" className="home-india-state-btn">
-            <AiFillHome />
-          </button>
-        </Link>
-      </li>
-      <li>
-        <button
-          type="button"
-          className="home-india-state-btn"
-          onClick={onClickIndia}
-        >
-          India
-        </button>
-      </li>
-      <li>
-        <button type="button" className="slash-btn">
-          /
-        </button>
-      </li>
-      {stateName !== undefined ? (
-        <li>
-          <button type="button" className="home-india-state-btn">
-            {stateName}
-          </button>
-        </li>
-      ) : null}
-    </ul>
-  )
-}
-
-const StatesDropdown = props => {
-  const {activeStateId, onSelectState, statesData, stateDropdownApi} = props
-
-  const isStateDisabled = stateDropdownApi !== apiConsts.success
-
-  const onDropDownSelect = event => {
-    onSelectState(event.target.value)
-  }
-
-  return (
-    <div className="loader-select-card">
-      {stateDropdownApi === apiConsts.loading ? (
-        <RenderDropdownLoadingView />
-      ) : (
-        <div style={{width: '30px'}} />
-      )}
-      <select
-        value={activeStateId}
-        className="state-select"
-        onChange={onDropDownSelect}
-        disabled={isStateDisabled}
-      >
-        <option value="selectState">Select State</option>
-        {statesData.length === 0
-          ? null
-          : statesData.map(each => (
-              <option key={each.state_id} value={each.state_id}>
-                {each.state_name}
-              </option>
-            ))}
-      </select>
-    </div>
-  )
-}
-
-const DistrictsDropdown = props => {
-  const {
-    activeDistrictId,
-    onSelectDistrict,
-    districtsData,
-    districtDropdownApi,
-  } = props
-
-  const isDistrictDisabled = districtDropdownApi !== apiConsts.success
-
-  const onDropDownSelect = event => {
-    onSelectDistrict(event.target.value)
-  }
-
-  return (
-    <div className="loader-select-card">
-      {districtDropdownApi === apiConsts.loading ? (
-        <RenderDropdownLoadingView />
-      ) : (
-        <div style={{width: '30px'}} />
-      )}
-      <select
-        value={activeDistrictId}
-        className="state-select"
-        onChange={onDropDownSelect}
-        disabled={isDistrictDisabled}
-      >
-        <option value="selectDistrict">Select District</option>
-        {isDistrictDisabled
-          ? null
-          : districtsData.map(each => (
-              <option key={each.district_id} value={each.district_id}>
-                {each.district_name}
-              </option>
-            ))}
-      </select>
-    </div>
-  )
-}
-
 const RenderDropdownLoadingView = () => (
-  <div data-testid="routeLoader" className="loading-container-dropdown">
+  <div data-testid="routeLoader" className="loading-container-top-block">
     <Loader
       type="ThreeDots"
       color="#007bff"
       radius={1.5}
-      height={30}
-      width={30}
+      height={60}
+      width={60}
     />
   </div>
 )
